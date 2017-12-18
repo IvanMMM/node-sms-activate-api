@@ -10,13 +10,15 @@ class SmsActivate {
 
   _apikey: string;
   _url: string = SmsActivate.defaults.url;
+  _ref: string;
 
-  constructor(apikey: string, url?: string) {
+  constructor(apikey: string, url?: string, ref?: string) {
     if (typeof apikey !== 'string')
       throw new TypeError('API Key must be a string');
 
     this._apikey = apikey;
     if (url) this._url = url;
+    if (ref) this._ref = ref;
   }
 
   async getBalance(): Promise<number> {
@@ -113,7 +115,8 @@ class SmsActivate {
     const req = {
       ...opts,
       api_key: this._apikey,
-      action: method
+      action: method,
+      ref:this._ref
     };
 
     if (SmsActivate.DEBUG) console.log('SmsActivate Request:', req);
